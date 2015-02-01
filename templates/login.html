@@ -1,0 +1,40 @@
+{# login.html #}
+{% extends "base.html" %}
+
+{% block section %}
+<br/>
+<div class="container">
+  <div class="row">
+    <div class="col-md-4 col-md-offset-4 text-center">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <h3 class="panel-title">GLMF - OAuth</h3>
+        </div>
+        <div class="panel-body">
+          <div class="container">
+            <div class="col-sm-3">
+              <div class="row">
+                <a class="btn btn-block btn-facebook btn-material-indigo" href="login/fb">
+                  <i class="fa fa-facebook"></i> Sign in with Facebook
+                </a>
+              </div>
+              <br/>
+              <div class="row">
+                <a class="btn btn-block btn-twitter btn-material-lightblue" href="login/tw">
+                  <i class="fa fa-twitter"></i> Sign in with Twitter
+                </a>
+              </div>
+              <br/>
+              <div class="row">
+                <a class="btn btn-block btn-google-plus btn-material-red" href="login/google">
+                  <i class="fa fa-google-plus"></i> Sign in with Google+
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock section %}

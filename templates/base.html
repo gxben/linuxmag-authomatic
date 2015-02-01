@@ -1,0 +1,12 @@
+{# base.html #}
+<!DOCTYPE html>
+<html>
+  {% include "header.html" %}
+  <body>
+
+    <div class="container-fluid">
+      {% block section %}{% endblock %}
+    </div>
+
+  </body>
+</html>

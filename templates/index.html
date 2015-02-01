@@ -1,0 +1,45 @@
+{# index.html #}
+{% extends "base.html" %}
+
+{% macro user_infos() %}
+    {% if result.user.credentials %}
+      {% if result.provider.name == 'tw' %}
+        {% set url = 'https://api.twitter.com/1.1/users/lookup.json?screen_name={0}'.format(result.user.username) %}
+        {% set response = result.provider.access(url) %}
+        {% set nm = response.data[0]['name'] %}
+        {% set av = response.data[0]['profile_image_url_https'] %}
+        {% set url = 'https://api.twitter.com/1.1/statuses/user_timeline.json?count=1&user_id={0}'.format(result.user.username) %}
+        {% set response = result.provider.access(url) %}
+        {% set msg = response.data[0].text %}
+      {%endif %}
+      {% if result.provider.name == 'fb' %}
+        {% set url = 'https://graph.facebook.com/v2.2/me?fields=id,name,picture' %}
+        {% set response = result.provider.access(url) %}
+        {% set nm = response.data.name %}
+        {% set av = response.data.picture.data.url %}
+        {% set url = 'https://graph.facebook.com/v2.2/me/links?count=1' %}
+        {% set response = result.provider.access(url) %}
+        {% set msg = response.data.data[0].comments.data[0].message %}
+      {%endif %}
+      {% if result.provider.name == 'google' %}
+        {% set url = 'https://www.googleapis.com/plus/v1/people/{0}'.format(result.user.id) %}
+        {% set response = result.provider.access(url) %}
+        {% set nm = response.data.displayName %}
+        {% set av = response.data.image.url %}
+        {% set url = 'https://www.googleapis.com/plus/v1/people/{0}/activities/public?maxResults=1'.format(result.user.id) %}
+        {% set response = result.provider.access(url) %}
+        {% set msg = response.data.items()[3][1][0].title %}
+      {%endif %}
+    {%endif %}
+    <br/>
+    <table cellpadding="5">
+      <td><img src="{{av}}" height="72" width="72"/></td>
+      <td><b>Nom:</b> {{nm}}<br/>{{msg}}</td>
+    </table>
+    <br/>
+    <a href="/logout"><b>Logout !</b></a>
+{% endmacro %}
+
+{% block section %}
+       {{ user_infos() }}
+{% endblock section %}
